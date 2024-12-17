@@ -1,0 +1,10 @@
+mysqlclient==2.2.4
+Django==5.0.6
+pymysql
+djangorestframework==3.14.0
+django-cors-headers==3.13.0
+requests==2.28.1
+selenium
+dj_database_url
+cryptography
+lxml
