@@ -11,7 +11,9 @@ from selenium.webdriver.support import expected_conditions as EC
 # 如果不存在目录则创建
 if not os.path.exists("./data"):
     os.makedirs("./data")
-
+current_dir = os.path.dirname(os.path.abspath(__file__))
+edge_driver_path = os.path.join(current_dir, '../../script/msedgedriver')  # 上两级目录下的msedgedriver
+edge_path = os.path.join(current_dir, '../../script/MicrosoftEdge')  # 上两级目录下的edge浏览器
 # 创建edge浏览器对象
 op = webdriver.EdgeOptions()
 op.add_experimental_option("detach", True)  # 不需要分离窗口

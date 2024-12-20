@@ -8,3 +8,4 @@ selenium
 dj_database_url
 cryptography
 lxml
+pandas

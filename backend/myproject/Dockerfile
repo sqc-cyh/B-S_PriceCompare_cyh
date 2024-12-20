@@ -7,14 +7,29 @@ WORKDIR /app
 
 # 安装依赖
 RUN apt-get update && apt-get install -y libgl1
-# RUN apt-get update && apt-get install -y libgl1 unzip
-# RUN wget https://msedgedriver.azureedge.net/132.0.2957.48/edgedriver_linux64.zip\
-#     && unzip edgedriver_linux64.zip -d /usr/local/bin/ \
-#     && chmod +x /usr/local/bin/msedgedriver \
-#     && echo "Download successful"
+RUN apt-get update && apt-get install -y libgl1 unzip
+# 安装Microsoft Edge
+# RUN wget https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_109.0.1518.61-1_amd64.deb \
+#     && dpkg -i microsoft-edge-stable_109.0.1518.61-1_amd64.deb \
+#     && rm microsoft-edge-stable_109.0.1518.61-1_amd64.deb
+
+# 确保Microsoft Edge的可执行文件在PATH环境变量中
+# RUN ln -s /opt/microsoft/edge/edge /usr/bin/msedge
+# # 下载并安装EdgeDriver
+RUN wget https://msedgedriver.azureedge.net/131.0.2903.112/edgedriver_linux64.zip \
+    && unzip edgedriver_linux64.zip -d /usr/local/bin/ \
+    && chmod +x /usr/local/bin/msedgedriver \
+    && echo "Download successful for EdgeDriver" \
+    && rm edgedriver_linux64.zip
 # 复制项目文件到工作目录
 COPY . .  
+RUN apt-get update
+RUN apt-get install -f
+# # 在docker中安装edge
+RUN dpkg -i ./microsoft-edge-stable_131.0.2903.112-1_amd64.deb || true 
+RUN apt-get install -fy
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r ./requirements.txt   
+RUN pip install pandas
 
 
 

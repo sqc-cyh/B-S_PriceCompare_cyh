@@ -19,7 +19,7 @@ from django.db import IntegrityError
 from .models import Product  # 导入新模型
 from .script.suning.Suning_Product import Suning_Product_Spider  # 导入爬虫类
 # from .script.jd.JD_Product import JD_Product_Spider  # 导入爬虫类
-from .script.weipinhui.VIP_Product import Vip_Product_Spider  # 导入爬虫类
+# from .script.weipinhui.VIP_Product import Vip_Product_Spider  # 导入爬虫类
 import os
 from django.conf import settings
 import subprocess
