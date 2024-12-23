@@ -33,7 +33,7 @@ def is_exists_cookies(cookie_file):
     if os.path.exists(cookie_file):
         # 读取cookie文件中的内容
         web.get("https://www.jd.com/")  # 添加cookie前必须打开浏览器
-        time.sleep(10)
+        time.sleep(2)
         with open(cookie_file, 'r') as file:
             # 读取文中的cookies
             cookies = json.load(file)

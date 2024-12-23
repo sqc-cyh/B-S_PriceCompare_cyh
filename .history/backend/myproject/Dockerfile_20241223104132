@@ -65,7 +65,7 @@ RUN curl https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-st
     rm microsoft-edge-stable.deb
 
 # 如果需要安装 msedgedriver
-RUN wget https://msedgedriver.azureedge.net/131.0.2903.112/edgedriver_linux64.zip && \
+RUN wget https://msedgedriver.azureedge.net/131.0.2903.87/edgedriver_linux64.zip && \
     unzip edgedriver_linux64.zip && \
     mv msedgedriver /usr/local/bin/ && \
     rm edgedriver_linux64.zip

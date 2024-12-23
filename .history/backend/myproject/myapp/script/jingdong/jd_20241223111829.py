@@ -2,16 +2,18 @@ import time
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 from lxml import etree
 import pandas as pd
 import os
 import sys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 # 如果不存在目录则创建
 if not os.path.exists("./data"):
     os.makedirs("./data")
-current_dir = os.path.dirname(os.path.abspath(__file__))
+
 # 创建edge浏览器对象
 op = webdriver.EdgeOptions()
 op.add_experimental_option("detach", True)  # 不需要分离窗口
@@ -25,9 +27,9 @@ op.add_argument("--disable-background-networking")  # 减少资源消耗
 op.add_argument("--disable-popup-blocking")  # 禁用弹窗拦截
 op.add_argument("--disable-infobars")  # 禁用提示条
 web = webdriver.Edge(options=op)  # 实例化一个浏览器对象
-# web = webdriver.Edge(options=op)  # 实例化一个浏览器对象
-# web.maximize_window()
-print('newnewnewnew')
+
+print('新版本代码')
+
 # 判断是否存在cookie,存在则添加到浏览器，不存在则登录获取保存cookie(避免每次都需要扫码)
 def is_exists_cookies(cookie_file):
     if os.path.exists(cookie_file):
@@ -85,18 +87,31 @@ def get_product(web):
         urls.append(img)
     return titless, prices, saleses, shop_names, urls
 
+# 滚动页面并点击分页按钮
+def scroll_and_click(web, xpath):
+    # 滚动到页面底部
+    slide(web)
+    # 等待分页按钮可点击
+    next_button = WebDriverWait(web, 20).until(
+        EC.element_to_be_clickable((By.XPATH, xpath))
+    )
+    # 使用JavaScript模拟点击
+    web.execute_script("arguments[0].click();", next_button)
+    time.sleep(5)  # 等待页面加载
+
 # 开始爬取多页数据
 def get_more(web, page_num, titless, prices, saleses, shop_names, urls):
-    for i in range(1):
+    for i in range(page_num):
         print(f"爬取第{i+1}页数据")
-        WebDriverWait(web, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="J_bottomPage"]/span[1]/a[9]'))).click()
-        time.sleep(5)  # 等待新页面加载
+        next_button_xpath = '//*[@id="J_bottomPage"]/span[1]/a[9]'  # 下一页按钮的XPath
+        scroll_and_click(web, next_button_xpath)  # 滚动并点击分页按钮
         t, p, s, sn, u = get_product(web)
         titless.extend(t)
         prices.extend(p)
         saleses.extend(s)
         shop_names.extend(sn)
         urls.extend(u)
+
 def main():
     titless, prices, saleses, shop_names, urls = [], [], [], [], []
     if len(sys.argv) < 2:

@@ -12,6 +12,8 @@ from selenium.webdriver.support import expected_conditions as EC
 if not os.path.exists("./data"):
     os.makedirs("./data")
 current_dir = os.path.dirname(os.path.abspath(__file__))
+edge_driver_path = os.path.join(current_dir, '../../script/msedgedriver')  # 上两级目录下的msedgedriver
+edge_path = os.path.join(current_dir, '../../script/MicrosoftEdge')  # 上两级目录下的edge浏览器
 # 创建edge浏览器对象
 op = webdriver.EdgeOptions()
 op.add_experimental_option("detach", True)  # 不需要分离窗口
@@ -19,11 +21,6 @@ op.add_argument("disable-blink-features=AutomationControlled")  # 防止被检�
 op.add_argument("--headless")  # 启用无头模式
 op.add_argument("--no-sandbox")  # 解决权限问题
 op.add_argument("--enable-unsafe-swiftshader")  # 添加这个参数
-op.add_argument("--disable-dev-shm-usage")  # 避免共享内存问题
-op.add_argument("--disable-extensions")  # 禁用扩展
-op.add_argument("--disable-background-networking")  # 减少资源消耗
-op.add_argument("--disable-popup-blocking")  # 禁用弹窗拦截
-op.add_argument("--disable-infobars")  # 禁用提示条
 web = webdriver.Edge(options=op)  # 实例化一个浏览器对象
 # web = webdriver.Edge(options=op)  # 实例化一个浏览器对象
 # web.maximize_window()
@@ -33,7 +30,7 @@ def is_exists_cookies(cookie_file):
     if os.path.exists(cookie_file):
         # 读取cookie文件中的内容
         web.get("https://www.jd.com/")  # 添加cookie前必须打开浏览器
-        time.sleep(10)
+        time.sleep(2)
         with open(cookie_file, 'r') as file:
             # 读取文中的cookies
             cookies = json.load(file)
@@ -106,8 +103,7 @@ def main():
     key = sys.argv[1]  # 从命令行获取搜索关键词
     current_dir = os.path.dirname(os.path.abspath(__file__))
     print(current_dir)
-    cookie_file = current_dir + r'/data/jd_cookies.txt'
-    print(cookie_file)
+    cookie_file = current_dir + '\data\jd_cookies.txt'
     is_exists_cookies(cookie_file)
     search_url = f'https://search.jd.com/Search?keyword={key}'
     web.execute_script(f"window.open('{search_url}','_blank')")

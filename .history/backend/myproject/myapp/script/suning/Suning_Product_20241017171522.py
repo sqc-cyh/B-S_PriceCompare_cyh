@@ -13,14 +13,8 @@ class Suning_Product_Spider():
         self.options = Options()
         self.options.add_argument('--headless=old')  # 设置无头浏览器
         self.options.add_argument('--disable-gpu')  # 禁用GPU硬件加速
-        self.options.add_argument("--no-sandbox")  # 解决权限问题
         self.options.add_experimental_option('excludeSwitches', ['enable-automation'])
         self.options.add_experimental_option('prefs', {'profile.managed_default_content_settings.images': 2})  # 禁止图片加载
-        self.options.add_argument("--disable-dev-shm-usage")  # 避免共享内存问题
-        self.options.add_argument("--disable-extensions")  # 禁用扩展
-        self.options.add_argument("--disable-background-networking")  # 减少资源消耗
-        self.options.add_argument("--disable-popup-blocking")  # 禁用弹窗拦截
-        self.options.add_argument("--disable-infobars")  # 禁用提示条
         self.browser = webdriver.Edge(options=self.options)
         # 获取当前脚本文件的目录
         self.script_dir = os.path.dirname(os.path.abspath(__file__))

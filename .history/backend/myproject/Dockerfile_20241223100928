@@ -58,14 +58,14 @@ RUN apt-get update && apt-get install -y \
     xdg-utils
 
 # 安装 Microsoft Edge 浏览器
-RUN curl https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_131.0.2903.112-1_amd64.deb -o microsoft-edge-stable.deb && \
+RUN curl https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-stable/microsoft-edge-stable_131.0.2903.86-1_amd64.deb -o microsoft-edge-stable.deb && \
     dpkg -i microsoft-edge-stable.deb && \
     apt-get update && \
     apt-get -f install && \
     rm microsoft-edge-stable.deb
 
 # 如果需要安装 msedgedriver
-RUN wget https://msedgedriver.azureedge.net/131.0.2903.112/edgedriver_linux64.zip && \
+RUN wget https://msedgedriver.azureedge.net/131.0.2903.87/edgedriver_linux64.zip && \
     unzip edgedriver_linux64.zip && \
     mv msedgedriver /usr/local/bin/ && \
     rm edgedriver_linux64.zip
